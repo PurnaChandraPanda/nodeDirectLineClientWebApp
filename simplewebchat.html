@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="webchat" role="main"></div>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat-minimal.js"></script>
+    <script>
+      window.WebChat.renderWebChat({
+        directLine: window.WebChat.createDirectLine({ secret: 'your-directline-secret-key' }),
+        userID: 'myUserId'
+      }, document.getElementById('webchat'));
+    </script>
+  </body>
+</html>
