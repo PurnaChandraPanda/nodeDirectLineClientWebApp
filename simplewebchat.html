@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html>
+  <head>
+      <style>
+          html, body { height: 100% }
+          body { margin: 0 }
+          #webchat,
+          #webchat > * {
+            height: 80%;
+            width: 60%;
+          }
+        </style>
+        <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  </head>
   <body>
     <div id="webchat" role="main"></div>
-    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat-minimal.js"></script>
+    <div id="backdiv">
+      <span>Your input messages can be seen here: </span>
+      <br/>
+      <textarea id="inputTextArea" style="width: 25%" rows="5"></textarea>
+    </div>
+
     <script>
       window.WebChat.renderWebChat({
-        directLine: window.WebChat.createDirectLine({ secret: 'your-directline-secret-key' }),
+        directLine: window.WebChat.createDirectLine({ secret: '4tDsCdDzu-w.cwA.njY.G4kiJi97W08JPTTPF4T2lcuOGrWe9pFP0FOF3AvCnWI' }),
         userID: 'myUserId'
       }, document.getElementById('webchat'));
-    </script>
+
+      // Add on keypress listener to text input
+      // and wait for the user to hit the `enter` key
+      $("input[aria-label='Type your message']").on('keypress', event => {
+         // Check if user pressed `enter`
+         if (event.which === 13){
+           var inputMessage = $("input[aria-label='Type your message']").val();
+           //console.log(inputMessage);
+           $("textarea[id='inputTextArea']").append(inputMessage + '\n');
+         }
+      });
+    </script>    
   </body>
 </html>
