@@ -52,20 +52,55 @@ Node.js app that would act as DirectLine client to bot service app.
 	This web page utilizes the latest v4 [WebChat] UI for DirectLine related conversation.
 
     ```	
-	<!DOCTYPE html>
-	<html>
+	  <head>
+	      <style>
+		  html, body { height: 100% }
+		  body { margin: 0 }
+		  #webchat,
+		  #webchat > * {
+		    height: 80%;
+		    width: 60%;
+		  }
+		</style>
+		<script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	  </head>
 	  <body>
-		<div id="webchat" role="main"></div>
-		<script src="https://cdn.botframework.com/botframework-webchat/latest/webchat-minimal.js"></script>
-		<script>
-		  window.WebChat.renderWebChat({
-			directLine: window.WebChat.createDirectLine({ secret: 'your-directline-secret-key' }),
-			userID: 'myUserId'
-		  }, document.getElementById('webchat'));
-		</script>
+	    <div id="webchat" role="main"></div>
+	    <div id="backdiv">
+	      <span>Your input messages can be seen here: </span>
+	      <br/>
+	      <textarea id="inputTextArea" style="width: 25%" rows="5"></textarea>
+	    </div>
+
+	    <script>
+	      window.WebChat.renderWebChat({
+		directLine: window.WebChat.createDirectLine({ secret: '4tDsCdDzu-w.cwA.njY.G4kiJi97W08JPTTPF4T2lcuOGrWe9pFP0FOF3AvCnWI' }),
+		userID: 'myUserId'
+	      }, document.getElementById('webchat'));
+
+	      // Add on keypress listener to text input
+	      // and wait for the user to hit the `enter` key
+	      $("input[aria-label='Type your message']").on('keypress', event => {
+		 // Check if user pressed `enter`
+		 if (event.which === 13){
+		   var inputMessage = $("input[aria-label='Type your message']").val();
+		   //console.log(inputMessage);
+		   $("textarea[id='inputTextArea']").append(inputMessage + '\n');
+		 }
+	      });
+	    </script>    
 	  </body>
-	</html>
 	 ```	
+  And, the "webchat" app is invoked from Node.js side by following:
+  ```
+  var app = express();
+  app.use(bodyParser.urlencoded({extended: false}));
+  ..
+  app.get('/webchatClient', function (req, res) {
+    res.sendFile('simplewebchat.html', {root: __dirname});
+  });
+  ```
 
 ### Note
 For "WebChat" integration in Node.js and ASP.NET framework, our product team put together a great blog at https://blog.botframework.com/2018/09/01/using-webchat-with-azure-bot-services-authentication/. If you know how to work with routes in Node.js, it is easy to follow for next steps. The one I shared is plain vanilla app. For complex enterprise app, you should follow the later shared blog with depth work.
