@@ -75,7 +75,7 @@ Node.js app that would act as DirectLine client to bot service app.
 
 	    <script>
 	      window.WebChat.renderWebChat({
-		directLine: window.WebChat.createDirectLine({ secret: '4tDsCdDzu-w.cwA.njY.G4kiJi97W08JPTTPF4T2lcuOGrWe9pFP0FOF3AvCnWI' }),
+		directLine: window.WebChat.createDirectLine({ secret: 'DL-secret-key' }),
 		userID: 'myUserId'
 	      }, document.getElementById('webchat'));
 
